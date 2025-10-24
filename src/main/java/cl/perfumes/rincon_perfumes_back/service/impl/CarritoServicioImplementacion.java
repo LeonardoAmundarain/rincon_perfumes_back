@@ -21,7 +21,7 @@ public class CarritoServicioImplementacion implements CarritoServicio {
 
     @Override
     public Optional<CarritoEntidad> obtenerPorClienteYProducto(Long clienteId, Long productoId) {
-        return carritoRepositorio.findByClienteIdAndProductoId(clienteId, productoId);
+        return carritoRepositorio.findByClienteIdAndProducto_IdProducto(clienteId, productoId);
     }
 
     @Override

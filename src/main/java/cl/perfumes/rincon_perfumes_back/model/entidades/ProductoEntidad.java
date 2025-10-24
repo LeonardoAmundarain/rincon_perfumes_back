@@ -43,4 +43,37 @@ public class ProductoEntidad {
     @ManyToOne
     @JoinColumn(name = "id_genero", nullable = false)
     private GeneroEntidad genero;
+
+    @Column(length = 100)
+    private String aroma;
+
+    @Column(length = 100)
+    private String familiaOlfativa;
+
+    @Column(length = 500)
+    private String imagenUrl;
+
+    @Column(nullable = false)
+    private Integer stock = 0;
+
+    @Column(nullable = false)
+    private Boolean activo = true;
+
+    @Column
+    private java.time.LocalDateTime fechaCreacion;
+
+    @Column
+    private java.time.LocalDateTime fechaActualizacion;
+
+    @PrePersist
+    protected void onCreate() {
+        fechaCreacion = java.time.LocalDateTime.now();
+        fechaActualizacion = java.time.LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        fechaActualizacion = java.time.LocalDateTime.now();
+    }
+
 }
