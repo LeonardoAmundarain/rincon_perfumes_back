@@ -11,4 +11,6 @@ public class LoginResponse {
     private String mensaje;
     private String nombreUsuario;
     private boolean autenticado;
+    // JWT token (null cuando la autenticación falla)
+    private String token;
 }
