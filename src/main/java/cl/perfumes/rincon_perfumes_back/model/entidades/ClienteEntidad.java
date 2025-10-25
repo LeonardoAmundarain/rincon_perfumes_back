@@ -52,6 +52,7 @@ public class ClienteEntidad {
     private String telefono;
 
     @Column(nullable = false)
+    @Builder.Default
     private LocalDate fechaCreacion = LocalDate.now();
 }
 

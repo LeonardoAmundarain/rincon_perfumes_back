@@ -27,14 +27,18 @@ public class CarritoEntidad {
     private ProductoEntidad producto;
 
     @Column(nullable = false)
+    @Builder.Default
     private Integer cantidad = 1;
 
     @Column(nullable = false)
+    @Builder.Default
     private LocalDateTime fechaAgregado = LocalDateTime.now();
 
     @Column
+    @Builder.Default
     private LocalDateTime fechaActualizacion = LocalDateTime.now();
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean activo = true;
 }

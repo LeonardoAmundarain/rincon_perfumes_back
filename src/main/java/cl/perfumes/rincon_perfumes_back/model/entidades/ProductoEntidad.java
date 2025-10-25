@@ -54,9 +54,11 @@ public class ProductoEntidad {
     private String imagenUrl;
 
     @Column(nullable = false)
+    @Builder.Default
     private Integer stock = 0;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean activo = true;
 
     @Column

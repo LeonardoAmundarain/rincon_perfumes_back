@@ -23,12 +23,14 @@ public class PedidoEntidad {
     private ClienteEntidad cliente;
 
     @Column(nullable = false)
+    @Builder.Default
     private LocalDateTime fechaPedido = LocalDateTime.now();
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal subtotal;
 
     @Column(precision = 10, scale = 2)
+    @Builder.Default
     private BigDecimal descuento = BigDecimal.ZERO;
 
     @Column(nullable = false, precision = 10, scale = 2)
@@ -57,5 +59,6 @@ public class PedidoEntidad {
     private PromocionEntidad promocionAplicada;
 
     @Column
+    @Builder.Default
     private LocalDateTime fechaActualizacion = LocalDateTime.now();
 }

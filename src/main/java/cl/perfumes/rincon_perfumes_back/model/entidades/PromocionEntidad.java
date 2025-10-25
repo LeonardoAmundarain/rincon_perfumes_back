@@ -37,6 +37,7 @@ public class PromocionEntidad {
     private LocalDate fechaFin;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean activo = true;
 
     @Column(length = 50, unique = true)
@@ -46,5 +47,6 @@ public class PromocionEntidad {
     private Integer maximoUsos;
 
     @Column
+    @Builder.Default
     private Integer usosActuales = 0;
 }

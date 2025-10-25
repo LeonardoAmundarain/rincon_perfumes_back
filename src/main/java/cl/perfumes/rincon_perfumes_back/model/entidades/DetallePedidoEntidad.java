@@ -35,5 +35,6 @@ public class DetallePedidoEntidad {
     private BigDecimal subtotal;
 
     @Column(precision = 10, scale = 2)
+    @Builder.Default
     private BigDecimal descuentoAplicado = BigDecimal.ZERO;
 }
