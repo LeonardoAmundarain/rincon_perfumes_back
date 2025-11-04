@@ -25,7 +25,7 @@ public class ProductoEntidad {
     @Column(nullable = false)
     private Double precio;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "volumen_ml")  // se cambio porque daba error en sql por el nombre con tilde
     private Integer volumenML;
 
     @ManyToOne
