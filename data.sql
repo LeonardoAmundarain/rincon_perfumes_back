@@ -5,10 +5,10 @@ USE rincon_perfumes_back;
 -- ============================================
 -- 1. ROLES
 -- ============================================
-INSERT INTO rol (nombre_rol, descripcion_rol) VALUES 
-('CLIENTE', 'Cliente del sistema'),
-('ENCARGADO', 'Encargado de productos'),
-('ADMIN_MAESTRO', 'Administrador maestro')
+INSERT INTO rol (id_rol, nombre_rol, descripcion_rol) VALUES 
+(3, 'CLIENTE', 'Cliente del sistema'),     -- ID 3 para el cliente
+(2, 'ENCARGADO', 'Encargado de productos'),
+(1, 'ADMIN_MAESTRO', 'Administrador maestro')
 ON DUPLICATE KEY UPDATE descripcion_rol=VALUES(descripcion_rol);
 
 -- ============================================

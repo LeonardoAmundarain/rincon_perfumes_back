@@ -22,8 +22,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Endpoints publicos
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/clientes").permitAll()
                         // Endpoints protegidos
-                        .requestMatchers("/api/usuarios/**", "/api/roles/**").hasAnyRole("ADMIN", "ENCARGADO")
+                        .requestMatchers("/api/usuarios/**", "/api/roles/**", "/api/productos/**", "/api/marcas/**","/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
