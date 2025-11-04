@@ -1,19 +1,22 @@
-
 -- ============================================
--- RINCÓN PERFUMES - DATA.SQL creo que con esto si esta operativo eder
+-- RINCÓN PERFUMES - DATA.SQL correccion EDER ahora si
 -- ============================================
 -- Archivo: data.sql
 -- Ubicación: src/main/resources/data.sql
 -- Descripción: Datos iniciales para el sistema
+-- VERSIÓN: 2.0 - Sintaxis compatible con MySQL
 -- ============================================
 
 -- ============================================
 -- 1. ROLES
 -- ============================================
-INSERT INTO rol (id_rol, nombre_rol, descripcion_rol) VALUES 
-(3, 'CLIENTE', 'Cliente del sistema'),
-(2, 'ENCARGADO', 'Encargado de productos'),
-(1, 'ADMIN_MAESTRO', 'Administrador maestro')
+INSERT INTO rol (id_rol, nombre_rol, descripcion_rol) VALUES (3, 'CLIENTE', 'Cliente del sistema')
+ON DUPLICATE KEY UPDATE descripcion_rol=VALUES(descripcion_rol);
+
+INSERT INTO rol (id_rol, nombre_rol, descripcion_rol) VALUES (2, 'ENCARGADO', 'Encargado de productos')
+ON DUPLICATE KEY UPDATE descripcion_rol=VALUES(descripcion_rol);
+
+INSERT INTO rol (id_rol, nombre_rol, descripcion_rol) VALUES (1, 'ADMIN_MAESTRO', 'Administrador maestro')
 ON DUPLICATE KEY UPDATE descripcion_rol=VALUES(descripcion_rol);
 
 -- ============================================
@@ -34,94 +37,181 @@ SELECT
 -- ============================================
 -- 4. TIPOS DE PRODUCTO
 -- ============================================
-INSERT INTO tipo_producto (nombre_tipo) VALUES 
-('EDP'),
-('EDT'),
-('EDC'),
-('PARFUM')
+INSERT INTO tipo_producto (nombre_tipo) VALUES ('EDP')
+ON DUPLICATE KEY UPDATE nombre_tipo=VALUES(nombre_tipo);
+
+INSERT INTO tipo_producto (nombre_tipo) VALUES ('EDT')
+ON DUPLICATE KEY UPDATE nombre_tipo=VALUES(nombre_tipo);
+
+INSERT INTO tipo_producto (nombre_tipo) VALUES ('EDC')
+ON DUPLICATE KEY UPDATE nombre_tipo=VALUES(nombre_tipo);
+
+INSERT INTO tipo_producto (nombre_tipo) VALUES ('PARFUM')
 ON DUPLICATE KEY UPDATE nombre_tipo=VALUES(nombre_tipo);
 
 -- ============================================
 -- 5. GÉNEROS
 -- ============================================
-INSERT INTO genero (nombre_genero) VALUES 
-('HOMBRE'),
-('MUJER'),
-('UNISEX')
+INSERT INTO genero (nombre_genero) VALUES ('HOMBRE')
+ON DUPLICATE KEY UPDATE nombre_genero=VALUES(nombre_genero);
+
+INSERT INTO genero (nombre_genero) VALUES ('MUJER')
+ON DUPLICATE KEY UPDATE nombre_genero=VALUES(nombre_genero);
+
+INSERT INTO genero (nombre_genero) VALUES ('UNISEX')
 ON DUPLICATE KEY UPDATE nombre_genero=VALUES(nombre_genero);
 
 -- ============================================
 -- 6. CATEGORÍAS DE MARCA
 -- ============================================
-INSERT INTO categoria (nombre_categoria, descripcion) VALUES 
-('ARABES', 'Perfumes árabes'),
-('EXCLUSIVAS', 'Marcas exclusivas y de nicho'),
-('DISEÑADOR', 'Marcas de diseñador reconocidas')
+INSERT INTO categoria (nombre_categoria, descripcion) VALUES ('ARABES', 'Perfumes árabes')
+ON DUPLICATE KEY UPDATE descripcion=VALUES(descripcion);
+
+INSERT INTO categoria (nombre_categoria, descripcion) VALUES ('EXCLUSIVAS', 'Marcas exclusivas y de nicho')
+ON DUPLICATE KEY UPDATE descripcion=VALUES(descripcion);
+
+INSERT INTO categoria (nombre_categoria, descripcion) VALUES ('DISEÑADOR', 'Marcas de diseñador reconocidas')
 ON DUPLICATE KEY UPDATE descripcion=VALUES(descripcion);
 
 -- ============================================
--- 7. MARCAS
+-- 7. MARCAS (CORREGIDO - UNA POR UNA)
 -- ============================================
-INSERT INTO marca (nombre_marca, id_categoria) VALUES 
-('Dior', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR')),
-('Chanel', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR')),
-('Lattafa', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'ARABES')),
-('Creed', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'EXCLUSIVAS')),
-('Tom Ford', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR')),
-('Armaf', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'ARABES'))
+INSERT INTO marca (nombre_marca, id_categoria) 
+VALUES ('Dior', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR'))
+ON DUPLICATE KEY UPDATE nombre_marca=VALUES(nombre_marca);
+
+INSERT INTO marca (nombre_marca, id_categoria) 
+VALUES ('Chanel', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR'))
+ON DUPLICATE KEY UPDATE nombre_marca=VALUES(nombre_marca);
+
+INSERT INTO marca (nombre_marca, id_categoria) 
+VALUES ('Lattafa', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'ARABES'))
+ON DUPLICATE KEY UPDATE nombre_marca=VALUES(nombre_marca);
+
+INSERT INTO marca (nombre_marca, id_categoria) 
+VALUES ('Creed', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'EXCLUSIVAS'))
+ON DUPLICATE KEY UPDATE nombre_marca=VALUES(nombre_marca);
+
+INSERT INTO marca (nombre_marca, id_categoria) 
+VALUES ('Tom Ford', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR'))
+ON DUPLICATE KEY UPDATE nombre_marca=VALUES(nombre_marca);
+
+INSERT INTO marca (nombre_marca, id_categoria) 
+VALUES ('Armaf', (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'ARABES'))
 ON DUPLICATE KEY UPDATE nombre_marca=VALUES(nombre_marca);
 
 -- ============================================
--- 8. PRODUCTOS DE EJEMPLO
+-- 8. PRODUCTOS DE EJEMPLO (CORREGIDO)
 -- ============================================
-INSERT INTO producto (nombre_producto, descripcion, precio, volumen_ml, id_marca, id_categoria, id_tipo, id_genero, stock, activo, aroma, familia_olfativa) VALUES
-('Dior Sauvage', 'Fragancia fresca y especiada para hombre', 89990, 100, 
- (SELECT id_marca FROM marca WHERE nombre_marca = 'Dior'),
- (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR'),
- (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'EDP'),
- (SELECT id_genero FROM genero WHERE nombre_genero = 'HOMBRE'),
- 50, true, 'Fresco Especiado', 'Aromática'),
- 
-('Chanel No 5', 'Icónico perfume femenino', 125990, 100,
- (SELECT id_marca FROM marca WHERE nombre_marca = 'Chanel'),
- (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR'),
- (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'PARFUM'),
- (SELECT id_genero FROM genero WHERE nombre_genero = 'MUJER'),
- 30, true, 'Floral Aldehídico', 'Floral'),
+INSERT INTO producto (nombre_producto, descripcion, precio, volumen_ml, id_marca, id_categoria, id_tipo, id_genero, stock, activo, aroma, familia_olfativa)
+VALUES (
+  'Dior Sauvage',
+  'Fragancia fresca y especiada para hombre',
+  89990,
+  100,
+  (SELECT id_marca FROM marca WHERE nombre_marca = 'Dior'),
+  (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR'),
+  (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'EDP'),
+  (SELECT id_genero FROM genero WHERE nombre_genero = 'HOMBRE'),
+  50,
+  true,
+  'Fresco Especiado',
+  'Aromática'
+);
 
-('Lattafa Yara', 'Perfume árabe dulce y cautivador', 29990, 100,
- (SELECT id_marca FROM marca WHERE nombre_marca = 'Lattafa'),
- (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'ARABES'),
- (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'EDP'),
- (SELECT id_genero FROM genero WHERE nombre_genero = 'MUJER'),
- 100, true, 'Dulce Floral', 'Oriental'),
+INSERT INTO producto (nombre_producto, descripcion, precio, volumen_ml, id_marca, id_categoria, id_tipo, id_genero, stock, activo, aroma, familia_olfativa)
+VALUES (
+  'Chanel No 5',
+  'Icónico perfume femenino',
+  125990,
+  100,
+  (SELECT id_marca FROM marca WHERE nombre_marca = 'Chanel'),
+  (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR'),
+  (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'PARFUM'),
+  (SELECT id_genero FROM genero WHERE nombre_genero = 'MUJER'),
+  30,
+  true,
+  'Floral Aldehídico',
+  'Floral'
+);
 
-('Creed Aventus', 'Fragancia de lujo para el hombre exitoso', 299990, 100,
- (SELECT id_marca FROM marca WHERE nombre_marca = 'Creed'),
- (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'EXCLUSIVAS'),
- (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'EDP'),
- (SELECT id_genero FROM genero WHERE nombre_genero = 'HOMBRE'),
- 20, true, 'Frutal Ahumado', 'Frutal'),
+INSERT INTO producto (nombre_producto, descripcion, precio, volumen_ml, id_marca, id_categoria, id_tipo, id_genero, stock, activo, aroma, familia_olfativa)
+VALUES (
+  'Lattafa Yara',
+  'Perfume árabe dulce y cautivador',
+  29990,
+  100,
+  (SELECT id_marca FROM marca WHERE nombre_marca = 'Lattafa'),
+  (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'ARABES'),
+  (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'EDP'),
+  (SELECT id_genero FROM genero WHERE nombre_genero = 'MUJER'),
+  100,
+  true,
+  'Dulce Floral',
+  'Oriental'
+);
 
-('Tom Ford Black Orchid', 'Fragancia sensual unisex', 189990, 100,
- (SELECT id_marca FROM marca WHERE nombre_marca = 'Tom Ford'),
- (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR'),
- (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'EDP'),
- (SELECT id_genero FROM genero WHERE nombre_genero = 'UNISEX'),
- 40, true, 'Floral Oscuro', 'Oriental'),
+INSERT INTO producto (nombre_producto, descripcion, precio, volumen_ml, id_marca, id_categoria, id_tipo, id_genero, stock, activo, aroma, familia_olfativa)
+VALUES (
+  'Creed Aventus',
+  'Fragancia de lujo para el hombre exitoso',
+  299990,
+  100,
+  (SELECT id_marca FROM marca WHERE nombre_marca = 'Creed'),
+  (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'EXCLUSIVAS'),
+  (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'EDP'),
+  (SELECT id_genero FROM genero WHERE nombre_genero = 'HOMBRE'),
+  20,
+  true,
+  'Frutal Ahumado',
+  'Frutal'
+);
 
-('Armaf Club de Nuit', 'Alternativa de lujo accesible', 39990, 105,
- (SELECT id_marca FROM marca WHERE nombre_marca = 'Armaf'),
- (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'ARABES'),
- (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'EDT'),
- (SELECT id_genero FROM genero WHERE nombre_genero = 'HOMBRE'),
- 80, true, 'Cítrico Amaderado', 'Aromática');
+INSERT INTO producto (nombre_producto, descripcion, precio, volumen_ml, id_marca, id_categoria, id_tipo, id_genero, stock, activo, aroma, familia_olfativa)
+VALUES (
+  'Tom Ford Black Orchid',
+  'Fragancia sensual unisex',
+  189990,
+  100,
+  (SELECT id_marca FROM marca WHERE nombre_marca = 'Tom Ford'),
+  (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'DISEÑADOR'),
+  (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'EDP'),
+  (SELECT id_genero FROM genero WHERE nombre_genero = 'UNISEX'),
+  40,
+  true,
+  'Floral Oscuro',
+  'Oriental'
+);
+
+INSERT INTO producto (nombre_producto, descripcion, precio, volumen_ml, id_marca, id_categoria, id_tipo, id_genero, stock, activo, aroma, familia_olfativa)
+VALUES (
+  'Armaf Club de Nuit',
+  'Alternativa de lujo accesible',
+  39990,
+  105,
+  (SELECT id_marca FROM marca WHERE nombre_marca = 'Armaf'),
+  (SELECT id_categoria FROM categoria WHERE nombre_categoria = 'ARABES'),
+  (SELECT id_tipo FROM tipo_producto WHERE nombre_tipo = 'EDT'),
+  (SELECT id_genero FROM genero WHERE nombre_genero = 'HOMBRE'),
+  80,
+  true,
+  'Cítrico Amaderado',
+  'Aromática'
+);
 
 -- ============================================
 -- 9. PROMOCIÓN DE EJEMPLO
 -- ============================================
-INSERT INTO promociones (nombre, descripcion, porcentaje_descuento, monto_minimo, fecha_inicio, fecha_fin, activo) VALUES
-('Descuento por compra mayor', 'Descuento del 10% en compras superiores a $59.990', 10.00, 59990.00, '2025-01-01', '2025-12-31', true)
+INSERT INTO promociones (nombre, descripcion, porcentaje_descuento, monto_minimo, fecha_inicio, fecha_fin, activo)
+VALUES (
+  'Descuento por compra mayor',
+  'Descuento del 10% en compras superiores a $59.990',
+  10.00,
+  59990.00,
+  '2025-01-01',
+  '2025-12-31',
+  true
+)
 ON DUPLICATE KEY UPDATE activo=true;
 
 -- ============================================
